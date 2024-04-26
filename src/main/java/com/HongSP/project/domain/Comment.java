@@ -26,6 +26,9 @@ public class Comment extends BaseEntity{
     @Column(name = "commentId", nullable = false)
     private long commentId;
 
+    @Column(name = "comment_content", nullable = false)
+    private String content;
+
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid", columnDefinition = "BIGINT", nullable = false)
     private User user;
