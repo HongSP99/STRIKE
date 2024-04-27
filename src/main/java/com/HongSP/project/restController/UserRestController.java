@@ -31,4 +31,20 @@ public class UserRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserRequestDto requestDto, HttpServletRequest request) {
+        try {
+            UserResponseDto responseDto = userService.loadUserByUserEmail(requestDto);
+            HttpSession session = request.getSession(true);  // 세션이 없으면 생성
+            session.setAttribute("userNickname", responseDto.getUserNickname());
+            session.setAttribute("loggedIn", true);
+            session.setMaxInactiveInterval(1800);
+            Object userEmail = session.getAttribute("userEmail");
+            System.out.println("userEmail = " + userEmail);
+            return ResponseEntity.ok("로그인 성공!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
