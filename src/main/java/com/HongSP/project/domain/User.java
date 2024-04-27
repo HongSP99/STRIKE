@@ -1,6 +1,7 @@
 package com.HongSP.project.domain;
 
 import com.HongSP.project.domain.post.Post;
+import com.HongSP.project.dto.UserRequestDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +21,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +41,11 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
+
+    @Builder
+    public User(UserRequestDto requestDto){
+        this.userEmail = requestDto.getUserEmail();
+        this.userPassword=requestDto.getUserPassword();
+        this.userNickname=requestDto.getUserNickname();
+    }
 }

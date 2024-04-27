@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="navbar">
+    <div class="navbar-left">
+        <span>STRIKE</span>
+    </div>
+    <div class="navbar-center">
+        <ul>
+            <li><a th:href="@{/board/lists?category=FREE}">전체</a></li>
+            <li><a th:href="@{/board/lists?category=CHEERING}">기술</a></li>
+            <li><a th:href="@{/board/lists?category=REVIEW}">생활</a></li>
+            <li><a th:href="@{/board/lists?category=TIP}">엔터테인먼트</a></li>
+            <!-- 다른 카테고리도 필요에 따라 추가할 수 있습니다 -->
+        </ul>
+    </div>
+    <div class="navbar-right">
+        <!-- 세션에 로그인 정보가 있는 경우 -->
+        <th:block th:if="${session.loggedIn}">
+            <span>안녕하세요, <span th:text="${session.userNickname}"></span>님</span>
+            <a th:href="@{/users/logout}">로그아웃</a>
+        </th:block>
+        <!-- 세션에 로그인 정보가 없는 경우 -->
+        <th:block th:unless="${session.loggedIn}">
+            <a th:href="@{/users/login}">로그인</a>
+            <a th:href="@{/users/signup}">회원가입</a>
+        </th:block>
+    </div>
+</nav>
+</body>
+</html>
