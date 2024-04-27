@@ -40,11 +40,17 @@ public class UserRestController {
             session.setAttribute("userNickname", responseDto.getUserNickname());
             session.setAttribute("loggedIn", true);
             session.setMaxInactiveInterval(1800);
-            Object userEmail = session.getAttribute("userEmail");
-            System.out.println("userEmail = " + userEmail);
             return ResponseEntity.ok("로그인 성공!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        System.out.println("session = " + session);
+        session.invalidate();
+        return ResponseEntity.ok("로그아웃되었습니다.");
     }
 }

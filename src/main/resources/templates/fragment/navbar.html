@@ -16,15 +16,15 @@
     </div>
     <div class="navbar-right">
         <!-- 세션에 로그인 정보가 있는 경우 -->
-        <th:block th:if="${session.loggedIn}">
+        <div th:if="${session.loggedIn}">
             <span>안녕하세요, <span th:text="${session.userNickname}"></span>님</span>
-            <a th:href="@{/users/logout}">로그아웃</a>
-        </th:block>
+            <a id="logout" th:href="@{/users/logout}">로그아웃</a>
+        </div>
         <!-- 세션에 로그인 정보가 없는 경우 -->
-        <th:block th:unless="${session.loggedIn}">
+        <div th:unless="${session.loggedIn}">
             <a th:href="@{/users/login}">로그인</a>
             <a th:href="@{/users/signup}">회원가입</a>
-        </th:block>
+        </div>
     </div>
 </nav>
 </body>

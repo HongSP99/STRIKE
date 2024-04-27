@@ -31,4 +31,9 @@ public class UserController {
     public String signUp(){
         return "user/register";
     }
+
+    @GetMapping("/logout")
+    public String logout(){
+        return "redirect:/users/login";
+    }
 }
