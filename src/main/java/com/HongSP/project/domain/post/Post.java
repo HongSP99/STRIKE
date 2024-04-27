@@ -47,9 +47,6 @@ public class Post extends BaseEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "post_create_date", nullable = false)
-    private LocalDateTime postCreateDate;
-
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid", columnDefinition = "BIGINT", nullable = false)
     private User user;
