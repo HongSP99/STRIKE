@@ -8,6 +8,7 @@ import com.HongSP.project.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +33,13 @@ public class PostRestController {
     }
 
     @GetMapping("/{category}")
-    public ResponseEntity<List<PostResponseDto>> getPostsByCategory(@PathVariable("category") Category category) {
-        List<PostResponseDto> posts = postService.getPostsByCategory(category);
-        return ResponseEntity.ok(posts);
+    public ResponseEntity<Optional<List<PostResponseDto>>> getPostsByCategory(@PathVariable("category") Category category) {
+        Optional<List<PostResponseDto>> posts = postService.getPostsByCategory(category);
+        if (posts.isPresent()) {
+            return ResponseEntity.ok(posts);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/post")

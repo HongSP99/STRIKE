@@ -10,6 +10,7 @@ import com.HongSP.project.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.derived.AnonymousTupleBasicValuedModelPart;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,9 @@ public class PostService {
         return postRepository.findAllByOrderByPostIdDesc().stream().map(PostResponseDto::new).toList();
     }
 
-    public List<PostResponseDto> getPostsByCategory(Category category) {
-        return postRepository.findByCategory(category).stream().map(PostResponseDto::new).toList();
+    public Optional<List<PostResponseDto>> getPostsByCategory(Category category) {
+        return postRepository.findByCategory(category)
+                .map(boards -> boards.stream().map(PostResponseDto::new).toList());
     }
 
     @Transactional
