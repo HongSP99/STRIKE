@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByOrderByPostIdDesc();
-    Optional<List<Post>> findByCategory(Category category);
+    Optional<List<Post>> findAllByCategoryOrderByPostIdDesc(Category category);
     Optional<Post> findByPostId(Long postId);
 }

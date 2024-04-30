@@ -50,7 +50,19 @@ public class PostRestController {
             PostResponseDto post = postService.getPost(postService.createPost(requestDto, session).getPostId());
             return ResponseEntity.ok(post);
         } catch (IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<?> getPost(@PathVariable("postId") long postId) {
+        System.out.println("PostRestController.getPost");
+        try{
+            PostResponseDto post = postService.getPost(postId);
+            System.out.println("post.getUserEmail() = " + post.getUserEmail());
+            return ResponseEntity.ok(post);
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

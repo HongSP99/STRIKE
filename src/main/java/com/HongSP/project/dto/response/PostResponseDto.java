@@ -14,6 +14,7 @@ public class PostResponseDto {
     private String postTitle;
     private String postContent;
     private String userNickname;
+    private String userEmail;
     private Category category;
     private Team team;
     private LocalDateTime createdAt;
@@ -23,6 +24,7 @@ public class PostResponseDto {
         this.postTitle = entity.getTitle();
         this.postContent = entity.getContent();
         this.userNickname = entity.getUser().getUserNickname();
+        this.userEmail = entity.getUser().getUserEmail();
         this.createdAt = entity.getCreatedAt();
         this.category = entity.getCategory();
         this.team = entity.getTeamName();

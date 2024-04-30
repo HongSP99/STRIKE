@@ -20,12 +20,15 @@ import org.springframework.stereotype.Service;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+
+    @Transactional
     public List<PostResponseDto> getAllPosts(){
         return postRepository.findAllByOrderByPostIdDesc().stream().map(PostResponseDto::new).toList();
     }
 
+
     public Optional<List<PostResponseDto>> getPostsByCategory(Category category) {
-        return postRepository.findByCategory(category)
+        return postRepository.findAllByCategoryOrderByPostIdDesc(category)
                 .map(boards -> boards.stream().map(PostResponseDto::new).toList());
     }
 
@@ -33,7 +36,6 @@ public class PostService {
     public PostResponseDto createPost(PostRequestDto requestDto, HttpSession session){
         System.out.println("PostService.createPost");
         String userEmail = (String)session.getAttribute("userEmail");
-        System.out.println("userEmail = " + userEmail);
         User user = userRepository.findByUserEmail(userEmail).orElseThrow(()->new IllegalArgumentException("로그인 하세요"));
         requestDto.setUser(user);
         Post post = new Post(requestDto);
@@ -43,9 +45,9 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponseDto getPost(Long postNum){
+    public PostResponseDto getPost(long postId){
         System.out.println("PostService.getPost");
-        return postRepository.findByPostId(postNum).map(PostResponseDto::new).orElseThrow(
+        return postRepository.findByPostId(postId).map(PostResponseDto::new).orElseThrow(
                 ()->new IllegalArgumentException("게시글 존재하지 않습니다.")
         );
     }
