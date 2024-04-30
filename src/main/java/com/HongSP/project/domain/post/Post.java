@@ -3,6 +3,8 @@ package com.HongSP.project.domain.post;
 import com.HongSP.project.domain.BaseEntity;
 import com.HongSP.project.domain.Comment;
 import com.HongSP.project.domain.User;
+import com.HongSP.project.dto.PostRequestDto;
+import com.HongSP.project.dto.UserRequestDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,4 +56,13 @@ public class Post extends BaseEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
+
+    @Builder
+    public Post(PostRequestDto requestDto){
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.category = requestDto.getCategory();
+        this.teamName = requestDto.getTeamName();
+        this.user = requestDto.getUser();
+    }
 }

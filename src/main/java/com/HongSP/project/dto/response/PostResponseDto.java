@@ -23,7 +23,7 @@ public class PostResponseDto {
         this.postTitle = entity.getTitle();
         this.postContent = entity.getContent();
         this.userNickname = entity.getUser().getUserNickname();
-        this.createdAt = entity.getCreatedDate();
+        this.createdAt = entity.getCreatedAt();
         this.category = entity.getCategory();
         this.team = entity.getTeamName();
     }

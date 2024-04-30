@@ -11,7 +11,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: dimgrey;
     margin: 0;
-    padding: 20px;
+    padding: 100px;
 }
 
 .container, .login-container{
