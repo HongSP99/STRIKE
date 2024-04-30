@@ -7,13 +7,19 @@ import com.HongSP.project.dto.PostRequestDto;
 import com.HongSP.project.dto.response.PostResponseDto;
 import com.HongSP.project.repository.PostRepository;
 import com.HongSP.project.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.derived.AnonymousTupleBasicValuedModelPart;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -64,6 +70,20 @@ public class PostService {
             throw new IllegalArgumentException("현재 로그인한 유저는 삭제할 권한이 없습니다.");
         }
         postRepository.delete(post);
+        return new PostResponseDto(post);
+    }
+
+    @Transactional
+    public PostResponseDto updatePost(long postId ,HttpSession session ,PostRequestDto requestDto){
+        String userEmail = (String)session.getAttribute("userEmail");
+        User user = userRepository.findByUserEmail(userEmail).orElseThrow(()->new IllegalArgumentException("로그인 하세요"));
+        Post post =postRepository.findByPostId(postId).orElseThrow(()->new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+        post.setTitle(requestDto.getPostTitle());
+        post.setContent(requestDto.getPostContent());
+        if(!post.getUser().getUserEmail().equals(user.getUserEmail())){
+            throw new IllegalArgumentException("현재 로그인한 유저는 수정할 권한이 없습니다.");
+        }
+        postRepository.save(post);
         return new PostResponseDto(post);
     }
 }

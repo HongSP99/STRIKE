@@ -59,8 +59,8 @@ public class Post extends BaseEntity {
 
     @Builder
     public Post(PostRequestDto requestDto){
-        this.title = requestDto.getTitle();
-        this.content = requestDto.getContent();
+        this.title = requestDto.getPostTitle();
+        this.content = requestDto.getPostContent();
         this.category = requestDto.getCategory();
         this.teamName = requestDto.getTeamName();
         this.user = requestDto.getUser();

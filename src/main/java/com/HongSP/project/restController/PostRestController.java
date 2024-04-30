@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,6 +74,18 @@ public class PostRestController {
             PostResponseDto post=postService.getPost(postId);
             HttpSession session = request.getSession(false);
             postService.deletePost(postId, session);
+            return ResponseEntity.ok(post);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/post/{postId}")
+    public ResponseEntity<?> editPost(@PathVariable("postId") long postId, HttpServletRequest request, @RequestBody PostRequestDto requestDto) {
+        try {
+            HttpSession session = request.getSession(false);
+            postService.updatePost(postId, session, requestDto);
+            PostResponseDto post = postService.getPost(postId);
             return ResponseEntity.ok(post);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -51,4 +51,10 @@ public class PostController {
         model.addAttribute("postId",postId);
         return "post/deletePost";
     }
+
+    @GetMapping("/post/{postId}/edit")
+    public String updatePost(@PathVariable("postId")long postId,Model model){
+        model.addAttribute("postId",postId);
+        return "post/editPost";
+    }
 }

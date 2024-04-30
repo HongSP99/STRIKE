@@ -12,8 +12,8 @@ public class PostRequestDto {
     private long postId;
     private Category category;
     private Team teamName;
-    private String title;
-    private String content;
+    private String postTitle;
+    private String postContent;
     private User user;
     private String userNickname;
 
