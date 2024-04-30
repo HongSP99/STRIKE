@@ -12,6 +12,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +63,18 @@ public class PostRestController {
             System.out.println("post.getUserEmail() = " + post.getUserEmail());
             return ResponseEntity.ok(post);
         }catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/post/{postId}")
+    public ResponseEntity<?> deletePost(@PathVariable("postId") long postId, HttpServletRequest request) {
+        try {
+            PostResponseDto post=postService.getPost(postId);
+            HttpSession session = request.getSession(false);
+            postService.deletePost(postId, session);
+            return ResponseEntity.ok(post);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

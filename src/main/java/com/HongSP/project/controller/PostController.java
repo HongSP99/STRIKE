@@ -45,4 +45,10 @@ public class PostController {
 
         return "post/postDetail";
     }
+
+    @GetMapping("/post/{postId}/delete")
+    public String deletePost(@PathVariable("postId") long postId, Model model){
+        model.addAttribute("postId",postId);
+        return "post/deletePost";
+    }
 }

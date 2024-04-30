@@ -51,4 +51,19 @@ public class PostService {
                 ()->new IllegalArgumentException("게시글 존재하지 않습니다.")
         );
     }
+
+
+    @Transactional
+    public PostResponseDto deletePost(long postId, HttpSession session){
+        String userEmail = (String)session.getAttribute("userEmail");
+        User user = userRepository.findByUserEmail(userEmail).orElseThrow(()->new IllegalArgumentException("로그인 하세요"));
+
+        Post post = postRepository.findByPostId(postId).orElseThrow(()->new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+
+        if(!post.getUser().getUserEmail().equals(userEmail)){
+            throw new IllegalArgumentException("현재 로그인한 유저는 삭제할 권한이 없습니다.");
+        }
+        postRepository.delete(post);
+        return new PostResponseDto(post);
+    }
 }
