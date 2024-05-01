@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <nav class="navbar">
-    <div class="navbar-left">
-        <a href="/">STRIKE</a>
+    <div class="navbar_brand">
+        <a href="/">⚾STRIKE</a>
     </div>
-    <div class="navbar-center">
-        <ul>
+    <div>
+        <ul class="navbar_menu">
             <li><a th:href="@{/boards/lists(category='FREE')}">자유 게시판</a></li>
             <li><a th:href="@{/boards/lists(category='CHEERING')}">응원</a></li>
             <li><a th:href="@{/boards/lists(category='REVIEW')}">리뷰</a></li>
@@ -14,10 +14,10 @@
             <!-- 다른 카테고리도 필요에 따라 추가할 수 있습니다 -->
         </ul>
     </div>
-    <div class="navbar-right">
+    <div class="navbar_login">
         <!-- 세션에 로그인 정보가 있는 경우 -->
         <div th:if="${session.loggedIn}">
-            <span>안녕하세요, <span th:text="${session.userNickname}"></span>님</span>
+            <span><span th:text="${session.userNickname}"></span>님  </span>
             <a id="logout" th:href="@{/users/logout}">로그아웃</a>
         </div>
         <!-- 세션에 로그인 정보가 없는 경우 -->

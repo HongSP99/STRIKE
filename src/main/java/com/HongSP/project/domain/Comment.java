@@ -1,6 +1,7 @@
 package com.HongSP.project.domain;
 
 import com.HongSP.project.domain.post.Post;
+import com.HongSP.project.dto.CommentRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Comment extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +36,10 @@ public class Comment extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "postid", referencedColumnName = "postid", columnDefinition = "BIGINT", nullable = false)
     private Post post;
+
+    public Comment(CommentRequestDto requestDto){
+        this.content = requestDto.getCommentContent();
+        this.user = requestDto.getUser();
+        this.post = requestDto.getPost();
+    }
 }
