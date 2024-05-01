@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+    <title>게시글</title>
+</head>
+<body>
+<nav th:replace="~{fragment/navbar::nav}"></nav>
+
+<h4>게시글</h4>
+<table>
+    <thead id="postHeadTable">
+    <tr>
+        <th id="title"></th>
+        <th id="userNickname"></th>
+    </tr>
+    </thead>
+    <tbody id="postBodyTable">
+    <tr>
+        <td id="content"></td>
+    </tr>
+    </tbody>
+</table>
+<script th:inline="javascript">
+    var postId = [[${postId}]];
+    var currentUserEmail=null;
+</script>
+<div>
+    <script th:inline="javascript">
+        currentUserEmail = [[${userEmail}]];
+    </script>
+    <div class="button-container">
+        <form th:action="@{/boards/post/{postId}/edit(postId=${postId})}" method="get">
+            <button type="submit">수정</button>
+        </form>
+        <form th:action="@{/boards/post/{postId}/delete(postId=${postId})}" method="get">
+            <button type="submit">삭제</button>
+        </form>
+    </div>
+</div>
+<a href="/"><button type="submit">게시판으로 돌아가기</button></a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function loadPost() {
+            $.ajax({
+                type: 'GET',
+                url: '/rest-api/boards/post/' + postId,
+                success: function (postResponse) {
+                    // 서버에서 받아온 JSON 데이터를 이용하여 HTML을 생성하여 테이블에 추가합니다.
+                    $('#title').text(postResponse.postTitle);
+                    $('#userNickname').text(postResponse.userNickname);
+                    $('#content').text(postResponse.postContent);
+                    var userEmail=postResponse.userEmail;
+
+                    if (userEmail === currentUserEmail) {
+                        $('.button-container').show();
+                    } else {
+                    // 게시물 작성자와 현재 로그인한 사용자의 ID가 일치하지 않는 경우
+                    // 수정 및 삭제 버튼 숨기기
+                        $('.button-container').hide();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+        loadPost();
+    });
+</script>
+</body>
+</html>

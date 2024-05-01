@@ -1,0 +1,107 @@
+<!-- HTML 파일에 추가 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+    <title>게시물 수정</title>
+</head>
+<body>
+
+<h2>게시물 수정</h2>
+<nav th:replace="~{fragment/navbar::nav}"></nav>
+
+<div class="container">
+    <form id="updatePost">
+        <label for="category">카테고리</label><br>
+        <input type="text" id="category" name="category" required placeholder="카테고리를 입력하세요"><br>
+        <label for="postTitle">제목</label><br>
+        <input type="text" id="postTitle" name="postTitle" required placeholder="제목을 입력하세요"><br>
+        <label for="teamName">팀</label><br>
+        <input type="text" id="teamName" name="teamName" required placeholder="팀이름을 입력하세요"><br>
+        <label for="postContent">내용</label><br>
+        <textarea id="postContent" name="postContent" required placeholder="내용을 입력하세요"></textarea><br><br>
+        <button type="submit">작성</button>
+    </form>
+    <form id="cancelUpdate">
+        <button type="submit">취소</button>
+    </form>
+</div>
+<script th:inline="javascript">
+    var postId = [[${postId}]];
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // 폼 제출 시 AJAX 요청 수행
+        $.ajax({
+            type:'GET',
+            url:'/rest-api/boards/post/' + postId,
+            success:function (postResponse){
+                $('#category').val(postResponse.category);
+                $('#postTitle').val(postResponse.postTitle);
+                $('#teamName').val(postResponse.teamName);
+                $('#postContent').val(postResponse.postContent);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching post:', error);
+            }
+        });
+
+        $('#updatePost').submit(function (event) {
+            event.preventDefault(); // 폼의 기본 동작 방지
+
+            // 폼 데이터 가져오기
+            var formData = {
+                category : $('#category').val(),
+                postTitle : $('#postTitle').val(),
+                teamName : $('#teamName').val(),
+                postContent : $('#postContent').val()
+            };
+
+            // REST API에 POST 요청 수행
+            $.ajax({
+                type: 'PUT',
+                url: '/rest-api/boards/post/' + postId, // 컨트롤러의 엔드포인트 URL로 변경해야 합니다.
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    // 성공적으로 게시글이 작성되면 메시지 표시
+                    alert('게시글이 성공적으로 수정되었습니다.');
+                    // 폼 초기화
+                    $('#category').val('');
+                    $('#postTitle').val('');
+                    $('#teamName').val('');
+                    $('#postContent').val('');
+                    window.location.href='/boards/post/' + postId;
+                },
+                error: function (xhr, status, error) {
+                    // 오류 발생 시 오류 메시지 표시
+                    alert(xhr.responseText);
+                }
+            });
+        });
+        $('#cancelUpdate').submit(function (event) {
+            event.preventDefault(); // 폼의 기본 동작 방지
+
+            // REST API에 POST 요청 수행
+            $.ajax({
+                type: 'GET',
+                url: '/boards/post/' + postId, // 컨트롤러의 엔드포인트 URL로 변경해야 합니다.
+                contentType: 'application/json',
+                success: function (response) {
+                    // 성공적으로 게시글이 작성되면 메시지 표시
+                    alert('게시글로 이동합니다.');
+                    window.location.href='/boards/post/' + postId;
+                },
+                error: function (xhr, status, error) {
+                    // 오류 발생 시 오류 메시지 표시
+                    alert(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

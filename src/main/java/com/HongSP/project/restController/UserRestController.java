@@ -38,6 +38,7 @@ public class UserRestController {
             UserResponseDto responseDto = userService.loadUserByUserEmail(requestDto);
             HttpSession session = request.getSession(true);  // 세션이 없으면 생성
             session.setAttribute("userNickname", responseDto.getUserNickname());
+            session.setAttribute("userEmail", responseDto.getUserEmail());
             session.setAttribute("loggedIn", true);
             session.setMaxInactiveInterval(1800);
             return ResponseEntity.ok("로그인 성공!");

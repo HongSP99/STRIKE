@@ -3,14 +3,14 @@
 <body>
 <nav class="navbar">
     <div class="navbar-left">
-        <span>STRIKE</span>
+        <a href="/">STRIKE</a>
     </div>
     <div class="navbar-center">
         <ul>
-            <li><a th:href="@{/board/lists?category=FREE}">자유 게시판</a></li>
-            <li><a th:href="@{/board/lists?category=CHEERING}">응원</a></li>
-            <li><a th:href="@{/board/lists?category=REVIEW}">리뷰</a></li>
-            <li><a th:href="@{/board/lists?category=TIP}">야구장 팁</a></li>
+            <li><a th:href="@{/boards/lists(category='FREE')}">자유 게시판</a></li>
+            <li><a th:href="@{/boards/lists(category='CHEERING')}">응원</a></li>
+            <li><a th:href="@{/boards/lists(category='REVIEW')}">리뷰</a></li>
+            <li><a th:href="@{/boards/lists(category='TIP')}">야구장 팁</a></li>
             <!-- 다른 카테고리도 필요에 따라 추가할 수 있습니다 -->
         </ul>
     </div>
