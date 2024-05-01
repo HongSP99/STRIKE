@@ -7,13 +7,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: dimgrey;
-    margin: 0;
-    padding: 100px;
-}
-
 .container, .login-container{
     max-width: 400px;
     margin: 50px auto;

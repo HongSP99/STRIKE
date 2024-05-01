@@ -37,4 +37,15 @@ public class CommentRestController {
         List<CommentResponseDto> commentResponseDtoList=commentService.readComments(postId);
         return ResponseEntity.ok(commentResponseDtoList);
     }
+
+    @DeleteMapping("/rest-api/comments/{commentId}")
+    public ResponseEntity<?> deleteComment(@PathVariable("commentId") long commentId, HttpServletRequest request){
+        try{
+            HttpSession session = request.getSession(false);
+            CommentResponseDto comment=commentService.deleteComment(commentId, session);
+            return ResponseEntity.ok(comment);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

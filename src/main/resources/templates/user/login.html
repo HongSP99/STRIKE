@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/loginAndRegister.css?after">
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css?after">
 </head>
 <body>
+<nav th:replace="~{fragment/navbar::nav}"></nav>
 <div class="login-container">
     <h2>Login</h2>
     <form id = "loginForm">

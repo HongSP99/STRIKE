@@ -37,4 +37,15 @@ public class CommentService {
     public List<CommentResponseDto> readComments(long postId){
         return commentRepository.findByPostPostIdOrderByCreatedAtDesc(postId).stream().map(CommentResponseDto::new).toList();
     }
+
+    @Transactional
+    public CommentResponseDto deleteComment(long commentId, HttpSession session){
+        String userEmail = (String)session.getAttribute("userEmail");
+        Comment comment=commentRepository.findByCommentId(commentId).orElseThrow(()->new IllegalArgumentException("대댓글이 존재하지 않습니다."));
+        if(!comment.getUser().getUserEmail().equals(userEmail)){
+            throw new IllegalArgumentException("현재 로그인한 유저는 삭제할 권한이 없습니다.");
+        }
+        commentRepository.delete(comment);
+        return new CommentResponseDto(comment);
+    }
 }
