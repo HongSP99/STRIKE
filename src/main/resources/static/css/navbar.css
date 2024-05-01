@@ -1,34 +1,76 @@
+/* 네비게이션 바 배경색 및 텍스트 색상 설정 */
+:root{
+    --background-color: white;
+    --accent-color:#d49466;
+}
+
+body {
+  font-family: "Do Hyeon", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  max-width: 100%;
+  width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
+    padding: 8px 12px;
+    border: 1px solid;
 }
 
-.navbar-left, .navbar-center, .navbar-right {
-    flex: 1;
+.navbar_brand {
+    font-size: 30px;
+    color: white;
 }
 
-.navbar-center ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
+.navbar_menu {
+    display: flex;
+    list-style: none;
+    padding-left: 0px;
+    font-size: 20px;
 }
 
-.navbar-center ul li {
-    display: inline;
-    margin-right: 10px;
+.navbar_menu li {
+    padding: 8px 20px;
 }
 
-.navbar-center ul li a {
-    color: #fff;
-    text-decoration: none;
+.navbar_menu :hover {
+    font-weight: bold;
 }
 
-.navbar-right a {
-    color: #fff;
-    text-decoration: none;
+.navbar_login {
+    list-style: none;
+    display: flex;
+    padding-left: 0px;
+    font-size: 20px;
+    padding: 8px 12px;
 }
+
+.navbar_login a {
+    padding: 8px 12px;
+    border: 1px solid;
+    border-radius: 5px;
+    color : white;
+    background-color: black;
+}
+
+.navbar_login a:hover {
+    background-color: #a0a0a0;
+}
+
+.navbar_login a:active {
+    background-color:
+}
+|
+
+.
