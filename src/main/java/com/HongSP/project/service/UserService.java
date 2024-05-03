@@ -15,10 +15,6 @@ public class UserService {
     private final UserRepository userRepository;
     @Transactional
     public UserResponseDto signupAccount(UserRequestDto requestDto){
-        String userEmail =requestDto.getUserEmail();
-        String userNickname = requestDto.getUserNickname();
-        String userPassword = requestDto.getUserPassword();
-
         User user = new User(requestDto);
         userRepository.save(user);
         return new UserResponseDto(user);

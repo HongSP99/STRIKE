@@ -25,7 +25,6 @@ public class UserRestController {
     public ResponseEntity<?> signupAccount(@RequestBody UserRequestDto requestDto) {
         try {
             UserResponseDto responseDto = userService.signupAccount(requestDto);
-            System.out.println("responseDto = " + responseDto);
             return ResponseEntity.ok(responseDto);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -50,7 +49,6 @@ public class UserRestController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        System.out.println("session = " + session);
         session.invalidate();
         return ResponseEntity.ok("로그아웃되었습니다.");
     }

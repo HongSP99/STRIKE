@@ -27,8 +27,6 @@ public class HomeController {
         int startPage = (((int) Math.ceil(((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = Math.min((startPage + blockLimit - 1), postsPages.getTotalPages());
 
-        System.out.println("postsPages.getTotalPages() = " + postsPages.getTotalPages());
-
         model.addAttribute("postsPages", postsPages);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

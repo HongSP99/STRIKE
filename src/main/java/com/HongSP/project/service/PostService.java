@@ -82,7 +82,6 @@ public class PostService {
     @Transactional
     public PostResponseDto deletePost(long postId, HttpSession session){
         String userEmail = (String)session.getAttribute("userEmail");
-        User user = userRepository.findByUserEmail(userEmail).orElseThrow(()->new IllegalArgumentException("로그인 하세요"));
 
         Post post = postRepository.findByPostId(postId).orElseThrow(()->new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 

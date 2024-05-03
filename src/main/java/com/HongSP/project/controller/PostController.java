@@ -9,6 +9,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/boards")
+@RequiredArgsConstructor
 public class PostController {
-    @Autowired
-    private PostService postService;
+    private final PostService postService;
 
     @GetMapping("/posts/{category}")
     public String getPostsByCategory(@PathVariable("category") Category category,@PageableDefault(page = 1) Pageable pageable, Model model) {
@@ -33,8 +34,6 @@ public class PostController {
         int blockLimit = 5;
         int startPage = (((int) Math.ceil(((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = Math.min((startPage + blockLimit - 1), postsByCategory.getTotalPages());
-
-        System.out.println("postsByCategory.getTotalPages() = " + postsByCategory.getTotalPages());
 
         model.addAttribute("categoryName", category.getCategoryName());
         model.addAttribute("category", category.toString());
@@ -52,11 +51,9 @@ public class PostController {
     @GetMapping("/post/{postId}")
     public String selectByPostId(@PathVariable("postId")long postId, HttpSession session , Model model){
         String userEmail = (String) session.getAttribute("userEmail");
-        System.out.println("userEmail = " + userEmail);
 
         model.addAttribute("postId", postId);
         model.addAttribute("userEmail", userEmail);
-        System.out.println("postId = " + postId);
 
         return "post/postDetail";
     }

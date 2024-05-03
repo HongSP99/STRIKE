@@ -50,7 +50,6 @@ public class PostRestController {
 
     @PostMapping("/post")
     public ResponseEntity<?> createPost(@RequestBody PostRequestDto requestDto, HttpServletRequest request) {
-        System.out.println("PostRestController.createPost");
         try {
             HttpSession session = request.getSession(false);
             PostResponseDto post = postService.getPost(postService.createPost(requestDto, session).getPostId());
@@ -62,10 +61,8 @@ public class PostRestController {
 
     @GetMapping("/post/{postId}")
     public ResponseEntity<?> getPost(@PathVariable("postId") long postId) {
-        System.out.println("PostRestController.getPost");
         try{
             PostResponseDto post = postService.getPost(postId);
-            System.out.println("post.getUserEmail() = " + post.getUserEmail());
             return ResponseEntity.ok(post);
         }catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,6 +38,7 @@ public class Comment extends BaseEntity{
     @JoinColumn(name = "postid", referencedColumnName = "postid", columnDefinition = "BIGINT", nullable = false)
     private Post post;
 
+    @Builder
     public Comment(CommentRequestDto requestDto){
         this.content = requestDto.getCommentContent();
         this.user = requestDto.getUser();
