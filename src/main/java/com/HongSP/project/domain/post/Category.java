@@ -14,4 +14,9 @@ public enum Category {
     private final String categoryName;
     private final String description;
     private final boolean isActive;
+
+    @Override
+    public String toString(){
+        return this.name();
+    }
 }

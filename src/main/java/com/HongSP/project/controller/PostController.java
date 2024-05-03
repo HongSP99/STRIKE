@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +26,21 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping("/lists")
-    public String getPostsByCategory(@RequestParam("category") String category, Model model) {
-        model.addAttribute("category", category);
+    @GetMapping("/posts/{category}")
+    public String getPostsByCategory(@PathVariable("category") Category category,@PageableDefault(page = 1) Pageable pageable, Model model) {
+        Page<PostResponseDto> postsByCategory = postService.getPostsByCategory(category, pageable);
+
+        int blockLimit = 5;
+        int startPage = (((int) Math.ceil(((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = Math.min((startPage + blockLimit - 1), postsByCategory.getTotalPages());
+
+        System.out.println("postsByCategory.getTotalPages() = " + postsByCategory.getTotalPages());
+
+        model.addAttribute("categoryName", category.getCategoryName());
+        model.addAttribute("category", category.toString());
+        model.addAttribute("postsByCategory", postsByCategory);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         return "post/categoryPosts";
     }
 

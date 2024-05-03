@@ -7,19 +7,17 @@ import com.HongSP.project.dto.PostRequestDto;
 import com.HongSP.project.dto.response.PostResponseDto;
 import com.HongSP.project.repository.PostRepository;
 import com.HongSP.project.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.derived.AnonymousTupleBasicValuedModelPart;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -27,15 +25,37 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    @Transactional
-    public List<PostResponseDto> getAllPosts(){
-        return postRepository.findAllByOrderByPostIdDesc().stream().map(PostResponseDto::new).toList();
+//    @Transactional
+//    public List<PostResponseDto> getAllPosts(){
+//        return postRepository.findAllByOrderByPostIdDesc()
+//                .stream().map(PostResponseDto::new).toList();
+//    }
+
+    public Page<PostResponseDto> getAllPosts(Pageable pageable) {
+        System.out.println("pageable.getPageNumber() = " + pageable.getPageNumber());
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 10;
+
+        System.out.println("page = " + page);
+
+        Page<Post> postsPages = postRepository.findAllByOrderByPostIdDesc(PageRequest.of(page, pageLimit));
+
+        return postsPages.map(
+                postPage -> new PostResponseDto(postPage));
     }
 
 
-    public Optional<List<PostResponseDto>> getPostsByCategory(Category category) {
-        return postRepository.findAllByCategoryOrderByPostIdDesc(category)
-                .map(boards -> boards.stream().map(PostResponseDto::new).toList());
+    public Page<PostResponseDto> getPostsByCategory(Category category, Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 10;
+
+        System.out.println("page = " + page);
+
+
+        Page<Post> postsPagesByCategory = postRepository.findAllByCategoryOrderByPostIdDesc(category, PageRequest.of(page, pageLimit));
+
+        return postsPagesByCategory.map(
+                postPageByCategory -> new PostResponseDto(postPageByCategory));
     }
 
     @Transactional
@@ -86,4 +106,6 @@ public class PostService {
         postRepository.save(post);
         return new PostResponseDto(post);
     }
+
+
 }

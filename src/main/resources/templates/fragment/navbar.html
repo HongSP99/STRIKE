@@ -7,10 +7,10 @@
     </div>
     <div>
         <ul class="navbar_menu">
-            <li><a th:href="@{/boards/lists(category='FREE')}">자유 게시판</a></li>
-            <li><a th:href="@{/boards/lists(category='CHEERING')}">응원</a></li>
-            <li><a th:href="@{/boards/lists(category='REVIEW')}">리뷰</a></li>
-            <li><a th:href="@{/boards/lists(category='TIP')}">야구장 팁</a></li>
+            <li><a th:href="@{/boards/posts/{category}(category='FREE')}">자유 게시판</a></li>
+            <li><a th:href="@{/boards/posts/{category}(category='CHEERING')}">응원</a></li>
+            <li><a th:href="@{/boards/posts/{category}(category='REVIEW')}">리뷰</a></li>
+            <li><a th:href="@{/boards/posts/{category}(category='TIP')}">야구장 팁</a></li>
             <!-- 다른 카테고리도 필요에 따라 추가할 수 있습니다 -->
         </ul>
     </div>

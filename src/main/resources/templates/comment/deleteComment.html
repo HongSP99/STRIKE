@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/loginAndRegister.css?after">
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css?after">
     <title>댓글 삭제</title>
 </head>
 <body>
+<nav th:replace="~{fragment/navbar::nav}"></nav>
 
 <h2>댓글 삭제</h2>
 <div class="container">
-    <div >
-        <div class="button">
-            <form id="deleteComment">
-                <p>댓글을 삭제하시겠습니까?</p>
-                <button type="submit">확인</button>
-            </form>
-            <form id="cancelDelete">
-                <button type="submit">취소</button>
-            </form>
+    <form id="deleteComment">
+        <p>댓글을 삭제하시겠습니까?</p>
+        <div class="button-group">
+            <button type="submit">확인</button>
+            <button id="cancelDelete" type="button">취소</button>
         </div>
-    </div>
+    </form>
 </div>
 
 <script th:inline="javascript">
@@ -27,6 +26,7 @@
     var postId=[[${postId}]]
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/logout.js"></script>
 <script>
     $(document).ready(function () {
         // 폼 제출 시 AJAX 요청 수행
@@ -49,7 +49,7 @@
             });
         });
 
-        $('#cancelDelete').submit(function (event) {
+        $('#cancelDelete').click(function (event) {
             event.preventDefault(); // 폼의 기본 동작 방지
             // REST API에 POST 요청 수행
             $.ajax({

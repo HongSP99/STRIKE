@@ -10,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 </head>
 <body>
-<link rel="stylesheet" type="text/css" href="/css/navbar.css?after">
-<h2>등록</h2>
+<nav th:replace="~{fragment/navbar::nav}"></nav>
 <form id="signupForm" class="container">
+    <h2>등록</h2>
     <div>
         <label for="userEmail">이메일:</label>
         <input type="email" id="userEmail" name="userEmail" required>

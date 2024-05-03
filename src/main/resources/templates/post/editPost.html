@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/navbar.css?after">
+    <link rel="stylesheet" type="text/css" href="/css/writePost.css?after">
     <title>STRIKE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,24 +18,25 @@
 
 <div class="container">
     <form id="updatePost">
-        <label for="category">카테고리</label><br>
+        <label for="category">카테고리</label>
         <input type="text" id="category" name="category" required placeholder="카테고리를 입력하세요"><br>
-        <label for="postTitle">제목</label><br>
+        <label for="postTitle">제목</label>
         <input type="text" id="postTitle" name="postTitle" required placeholder="제목을 입력하세요"><br>
-        <label for="teamName">팀</label><br>
+        <label for="teamName">팀</label>
         <input type="text" id="teamName" name="teamName" required placeholder="팀이름을 입력하세요"><br>
-        <label for="postContent">내용</label><br>
+        <label for="postContent">내용</label>
         <textarea id="postContent" name="postContent" required placeholder="내용을 입력하세요"></textarea><br><br>
-        <button type="submit">작성</button>
-    </form>
-    <form id="cancelUpdate">
-        <button type="submit">취소</button>
+        <div class="button-group">
+            <button type="submit">작성</button>
+            <button id = "cancelUpdate" type = "button">취소</button>
+        </div>
     </form>
 </div>
 <script th:inline="javascript">
     var postId = [[${postId}]];
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/logout.js"></script>
 <script>
     $(document).ready(function () {
         // 폼 제출 시 AJAX 요청 수행
@@ -85,26 +87,18 @@
                 }
             });
         });
-        $('#cancelUpdate').submit(function (event) {
-            event.preventDefault(); // 폼의 기본 동작 방지
 
-            // REST API에 POST 요청 수행
-            $.ajax({
-                type: 'GET',
-                url: '/boards/post/' + postId, // 컨트롤러의 엔드포인트 URL로 변경해야 합니다.
-                contentType: 'application/json',
-                success: function (response) {
-                    // 성공적으로 게시글이 작성되면 메시지 표시
-                    alert('게시글로 이동합니다.');
-                    window.location.href='/boards/post/' + postId;
-                },
-                error: function (xhr, status, error) {
-                    // 오류 발생 시 오류 메시지 표시
-                    alert(xhr.responseText);
-                }
-            });
+        $('#cancelUpdate').click(function (event) {
+            event.preventDefault(); // 버튼의 기본 동작 방지
+
+            // 경고 메시지 표시 후 페이지 이동
+            if (confirm('수정를 취소하시겠습니까?')) {
+                window.location.href = '/boards/post/' + postId;
+            }
         });
     });
+
+
 </script>
 </body>
 </html>
