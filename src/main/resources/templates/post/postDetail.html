@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css?after">
+    <link rel="stylesheet" type="text/css" href="/css/post.css?after">
     <title>STRIKE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,18 +12,20 @@
 <body>
 <nav th:replace="~{fragment/navbar::nav}"></nav>
 
-<h4>게시글</h4>
 <table>
     <thead id="postHeadTable">
-    <tr>
-        <th id="title"></th>
-        <th id="userNickname"></th>
-    </tr>
+        <tr>
+            <th id="title"></th>
+            <th id="userNickname"></th>
+            <th id="createdAt"></th>
+        </tr>
     </thead>
     <tbody id="postBodyTable">
-    <tr>
-        <td id="content"></td>
-    </tr>
+        <tr>
+            <td id="content"></td>
+            <td></td>
+            <td></td>
+        </tr>
     </tbody>
 </table>
 <script th:inline="javascript">
@@ -47,7 +50,6 @@
         <button type="submit">작성</button>
     </form>
 </div>
-<a href="/"><button type="submit">게시판으로 돌아가기</button></a>
 <h4>댓글</h4>
 <table>
     <tbody id="commentTableBody">
@@ -55,6 +57,7 @@
 </table>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/logout.js"></script>
 <script>
     $(document).ready(function () {
         function loadPost() {
@@ -66,6 +69,7 @@
                     $('#title').text(postResponse.postTitle);
                     $('#userNickname').text(postResponse.userNickname);
                     $('#content').text(postResponse.postContent);
+                    $('#createdAt').text(postResponse.createdAt);
                     var userEmail=postResponse.userEmail;
 
                     if (userEmail === currentUserEmail) {

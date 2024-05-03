@@ -7,45 +7,42 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/navbar.css?after">
+    <link rel="stylesheet" type="text/css" href="/css/writePost.css?after">
 </head>
 <body>
 <nav th:replace="~{fragment/navbar::nav}"></nav>
 
-<h2>Post</h2>
+<h2>게시글 작성</h2>
 <div class="container">
     <form id="postForm">
-        <label for="category">카테고리</label><br>
+        <label for="category">카테고리</label>
         <input type="text" id="category" name="category" required placeholder="카테고리를 입력하세요"><br>
-        <label for="title">제목</label><br>
+        <label for="title">제목</label>
         <input type="text" id="title" name="title" required placeholder="제목을 입력하세요"><br>
-        <label for="teamName">팀</label><br>
+        <label for="teamName">팀</label>
         <input type="text" id="teamName" name="teamName" required placeholder="팀이름을 입력하세요"><br>
-        <label for="content">내용</label><br>
+        <label for="content">내용</label>
         <textarea id="content" name="content" required placeholder="내용을 입력하세요"></textarea><br><br>
-
-        <button type="submit">작성</button>
-    </form>
-    <form id="cancelWrite">
-        <button type="submit">취소</button>
+        <div class="button-group">
+            <button type="submit">작성</button>
+            <button id="cancelButton" type="button">취소</button>
+        </div>
     </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/logout.js"></script>
 <script>
-    console.log("실행함");
     $(document).ready(function () {
         // 폼 제출 시 AJAX 요청 수행
         $('#postForm').submit(function (event) {
-            console.log("submit 실행함");
             event.preventDefault(); // 폼의 기본 동작 방지
-
             // 폼 데이터 가져오기
             var formData = {
-                title: $('#title').val(),
-                content: $('#content').val(),
+                postTitle: $('#title').val(),
+                postContent: $('#content').val(),
                 category: getCategoryValue($('#category').val()),
                 teamName: $('#teamName').val()
             };
-
             // REST API에 POST 요청 수행
             $.ajax({
                 type: 'POST',
@@ -67,6 +64,13 @@
                     alert(xhr.responseText);
                 }
             });
+        });
+        // 취소 버튼 클릭 시 이벤트 처리
+        $('#cancelButton').click(function () {
+            // 경고 메시지 표시 후 페이지 이동
+            if (confirm('작성을 취소하시겠습니까?')) {
+                window.location.href = '/';
+            }
         });
     });
 

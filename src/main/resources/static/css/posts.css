@@ -1,0 +1,86 @@
+/* Styles for the post table */
+table {
+    width: 100%;
+    border-top: 1px solid #d3d3d3;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th {
+    background-color: #d3d3d3 ;
+    border-top: 3px solid #727272;
+}
+th, td {
+    border-bottom: 1px solid #d3d3d3;
+    padding: 10px;
+}
+
+.small-column {
+    width: 50px;
+}
+
+.large-column {
+    width: 350px;
+}
+
+.left {text-align: left;}
+.center { text-align: center;}
+
+.pagination-links {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-links a {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    margin: 0 3px;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination-links a:hover {
+    background-color: #f2f2f2;
+}
+
+.pagination-links .selected {
+display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    margin: 0 3px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+
+/* Write post link style */
+div.th-if {
+    margin-top: 20px;
+}
+
+div.th-if a {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+div.th-if a:hover {
+    background-color: #666;
+}
+
+.write-link-container {
+    text-align: right;
+}
+
+.write-link{
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    margin: 0 3px;
+    text-decoration: none;
+    border-radius: 5px;
+}

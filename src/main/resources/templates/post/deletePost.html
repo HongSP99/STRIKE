@@ -8,20 +8,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/navbar.css?after">
+    <link rel="stylesheet" type="text/css" href="/css/loginAndRegister.css?after">
 </head>
 <body>
 <nav th:replace="~{fragment/navbar::nav}"></nav>
 <h2>게시글 삭제</h2>
 <div class="container">
-    <div class="button">
-        <form id="deletePost">
-            <p>정말 게시글을 삭제하시겠습니까?</p>
+    <form id="deletePost">
+        <p>정말 게시글을 삭제하시겠습니까?</p>
+        <div class="button-group">
             <button type="submit">확인</button>
-        </form>
-        <form id="deletePostCancel">
-            <button type="submit">취소</button>
-        </form>
-    </div>
+            <button id="deletePostCancel" type="button">취소</button>
+        </div>
+    </form>
 </div>
 
 
@@ -29,6 +28,7 @@
     var postId = [[${postId}]];
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/logout.js"></script>
 <script>
     $(document).ready(function () {
         // 폼 제출 시 AJAX 요청 수행
@@ -53,24 +53,13 @@
         });
 
 
-        $('#deletePostCancel').submit(function (event) {
-            event.preventDefault(); // 폼의 기본 동작 방지
+        $('#deletePostCancel').click(function (event) {
+            event.preventDefault(); // 버튼의 기본 동작 방지
 
-            // REST API에 POST 요청 수행
-            $.ajax({
-                type: 'GET',
-                url: '/boards/post/' + postId, // 컨트롤러의 엔드포인트 URL로 변경해야 합니다.
-                contentType: 'application/json',
-                success: function (response) {
-                    // 성공적으로 게시글이 작성되면 메시지 표시
-                    alert('게시글로 이동합니다.');
-                    window.location.href='/boards/post/'+postId;
-                },
-                error: function (xhr, status, error) {
-                    // 오류 발생 시 오류 메시지 표시
-                    alert(xhr.responseText);
-                }
-            });
+            // 경고 메시지 표시 후 페이지 이동
+            if (confirm('삭제를 취소하시겠습니까?')) {
+                window.location.href = '/boards/post/' + postId;
+            }
         });
     });
 </script>

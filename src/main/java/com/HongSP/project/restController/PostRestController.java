@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,21 +32,21 @@ public class PostRestController {
 
     private final PostService postService;
 
-    @GetMapping("/posts")
-    public ResponseEntity<List<PostResponseDto>> getPosts() {
-        List<PostResponseDto> posts = postService.getAllPosts();
-        return ResponseEntity.ok(posts);
-    }
+//    @GetMapping("/posts")
+//    public ResponseEntity<Page<PostResponseDto>> getPosts(Pageable pageable) {
+//        Page<PostResponseDto> posts = postService.getAllPosts(pageable);
+//        return ResponseEntity.ok(posts);
+//    }
 
-    @GetMapping("/{category}")
-    public ResponseEntity<Optional<List<PostResponseDto>>> getPostsByCategory(@PathVariable("category") Category category) {
-        Optional<List<PostResponseDto>> posts = postService.getPostsByCategory(category);
-        if (posts.isPresent()) {
-            return ResponseEntity.ok(posts);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @GetMapping("/{category}")
+//    public ResponseEntity<Optional<List<PostResponseDto>>> getPostsByCategory(@PathVariable("category") Category category) {
+//        Optional<List<PostResponseDto>> posts = postService.getPostsByCategory(category);
+//        if (posts.isPresent()) {
+//            return ResponseEntity.ok(posts);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
     @PostMapping("/post")
     public ResponseEntity<?> createPost(@RequestBody PostRequestDto requestDto, HttpServletRequest request) {

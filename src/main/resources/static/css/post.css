@@ -1,0 +1,93 @@
+h2 {
+    text-align: center;
+    padding: 20px;
+    background-color: darkgrey;
+    color: black;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+#title {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    width: 70%;
+}
+
+#userNickname {
+    width: 100px;
+    text-align: right;
+    vertical-align: bottom;
+}
+
+#createdAt {
+    width: 150px;
+    text-align: right;
+    vertical-align: bottom;
+}
+
+#content {
+    height: 500px;
+    vertical-align: top;
+    margin-top: 10px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.button-container form {
+    display: inline-block;
+}
+
+#commentTableBody td:nth-child(1) {
+    width: 5%;
+}
+
+#commentTableBody td:nth-child(2) {
+    width: 70%;
+}
+
+#commentTableBody td:nth-child(3) {
+    width: 20%;
+}
+
+.button-container {
+    text-align: right;
+}
+
+button{
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.button-group button {
+    padding: 5px 10px;
+}
+
+textarea {
+    width: 100%;
+    height: 50px;
+    resize: none;
+}
+
